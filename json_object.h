@@ -18,11 +18,11 @@ extern "C" {
 
 #define JSON_OBJECT_DEF_HASH_ENTRIES 16
 
-#undef FALSE
-#define FALSE ((boolean)0)
+#undef JSON_FALSE
+#define JSON_FALSE ((boolean)0)
 
-#undef TRUE
-#define TRUE ((boolean)1)
+#undef JSON_TRUE
+#define JSON_TRUE ((boolean)1)
 
 extern const char *json_number_chars;
 extern const char *json_hex_chars;

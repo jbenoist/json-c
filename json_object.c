@@ -286,7 +286,7 @@ struct json_object* json_object_new_boolean(boolean b)
 
 boolean json_object_get_boolean(struct json_object *jso)
 {
-  if(!jso) return FALSE;
+  if(!jso) return JSON_FALSE;
   switch(jso->o_type) {
   case json_type_boolean:
     return jso->o.c_boolean;
@@ -297,7 +297,7 @@ boolean json_object_get_boolean(struct json_object *jso)
   case json_type_string:
     return (jso->o.c_string.len != 0);
   default:
-    return FALSE;
+    return JSON_FALSE;
   }
 }
 
