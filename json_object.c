@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
+#include <stdarg.h>
 #include <string.h>
 
 #include "debug.h"
@@ -436,6 +437,19 @@ static void json_object_string_delete(struct json_object* jso)
 {
   free(jso->o.c_string.str);
   json_object_generic_delete(jso);
+}
+
+struct json_object *json_object_new_string_fmt(const char *fmt, ...)
+{
+  va_list ap;
+  struct json_object *jso = json_object_new(json_type_string);
+  if(!jso) return NULL;
+  jso->_delete = &json_object_string_delete;
+  jso->_to_json_string = &json_object_string_to_json_string;
+  va_start(ap, fmt);
+  jso->o.c_string.len = vasprintf(&jso->o.c_string.str, fmt, ap);
+  va_end(ap);
+  return jso;
 }
 
 struct json_object* json_object_new_string(const char *s)

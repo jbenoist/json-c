@@ -11,8 +11,8 @@ static int sort_fn (const void *j1, const void *j2)
   json_object **jso1, **jso2;
   int i1, i2;
 
-  jso1 = j1;
-  jso2 = j2;
+  jso1 = (void *)j1;
+  jso2 = (void *)j2;
   if (!*jso1 && !*jso2) {
     return 0;
   }
@@ -32,7 +32,7 @@ static int sort_fn (const void *j1, const void *j2)
 int main(int argc, char **argv)
 {
   json_tokener *tok;
-  json_object *my_string, *my_int, *my_object, *my_array;
+  json_object *my_string, *my_int, *my_object, *my_array, *my_fmt;
   json_object *new_obj;
   int i;
 
@@ -55,6 +55,12 @@ int main(int argc, char **argv)
   my_int = json_object_new_int(9);
   printf("my_int=%d\n", json_object_get_int(my_int));
   printf("my_int.to_string()=%s\n", json_object_to_json_string(my_int));
+
+  my_fmt = json_object_new_string_fmt("%s %p %d %0.02f",
+	json_object_get_string(my_string), 3735928559,
+	json_object_get_int(my_int), (float)json_object_get_int(my_int));
+  printf("my_fmt=%s\n", json_object_get_string(my_fmt));
+  printf("my_fmt.to_string()=%s\n", json_object_to_json_string(my_fmt));
 
   my_array = json_object_new_array();
   json_object_array_add(my_array, json_object_new_int(1));
@@ -214,6 +220,7 @@ int main(int argc, char **argv)
   json_object_put(my_int);
   json_object_put(my_object);
   json_object_put(my_array);
+  json_object_put(my_fmt);
 
   return 0;
 }

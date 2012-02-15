@@ -343,6 +343,8 @@ extern struct json_object* json_object_new_string(const char *s);
 
 extern struct json_object* json_object_new_string_len(const char *s, int len);
 
+extern struct json_object *json_object_new_string_fmt(const char *fmt, ...);
+
 /** Get the string value of a json_object
  *
  * If the passed object is not of type json_type_string then the JSON
